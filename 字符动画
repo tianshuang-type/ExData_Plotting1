@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<fstream>
+#include<time.h> 
+#include<windows.h>
+#include<iostream>
+#include<string>
+using namespace std;
+class CharacterVideo
+{
+	public:
+		HANDLE handle;
+		COORD coord;
+		void renewfileName(char* fileName,int fileNo)
+		{
+			sprintf(fileName,"%s%d%s","ag\\ba(",fileNo,").txt");
+		}
+		void  recursor(int x,int y)
+		{
+			coord.X=x;
+			coord.Y=y;
+			handle=GetStdHandle(STD_OUTPUT_HANDLE);
+			SetConsoleCursorPosition(handle,coord);
+		}
+};
+int main()
+{
+	CharacterVideo cv;
+	cv.recursor(0,0);
+	char fileName[22]={"ag\\ba(0).txt"};
+	string str; 
+	int i=0;
+	clock_t startTime,finishTime,delayTime;
+    delayTime=34; 
+	ifstream File(fileName);
+	cin.get();
+	startTime = clock();
+	while(i <= 12330)
+	{  
+		if(i%30==0)
+	     delayTime=44;
+	else
+		delayTime=34;
+		cv.renewfileName(fileName,i);
+        finishTime=clock();
+		if((finishTime -startTime)>= delayTime)
+	     { 
+			 i++;
+		File.open(fileName);
+		while(File.good())
+		{   
+			getline(File,str);
+			cout<<str;
+		}
+		File.close();
+		startTime+=delayTime;
+		cv.recursor(0,0);
+	   }
+	}
+    printf("Hello world!\n");
+	system("pause");
+	return 0;
+}
